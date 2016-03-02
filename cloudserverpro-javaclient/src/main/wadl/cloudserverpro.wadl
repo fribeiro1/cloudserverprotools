@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+Copyright 2012 Fernando Ribeiro
+
+This file is part of Cloud Server Pro Tools.
+
+Cloud Server Pro Tools is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+Cloud Server Pro Tools is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with Cloud Server Pro Tools. If not, see <http://www.gnu.org/licenses/>.
+-->
+<wadl:application xmlns:wadl="http://wadl.dev.java.net/2009/02"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<wadl:grammars>
+		<wadl:include href="../xsd/cloudserverpro.xsd" />
+	</wadl:grammars>
+	<wadl:resources base="https://cloud.locaweb.com.br/api">
+		<wadl:resource path="images">
+			<wadl:method name="GET">
+				<wadl:response>
+					<wadl:representation element="images"
+						mediaType="application/xml" />
+				</wadl:response>
+			</wadl:method>
+		</wadl:resource>
+		<wadl:resource path="instances">
+			<wadl:method name="GET">
+				<wadl:response>
+					<wadl:representation element="instances"
+						mediaType="application/xml" />
+				</wadl:response>
+			</wadl:method>
+		</wadl:resource>
+		<wadl:resource path="instances/{id}">
+			<wadl:param name="id" style="template" type="xs:int" />
+			<wadl:method name="GET">
+				<wadl:response>
+					<wadl:representation element="instance"
+						mediaType="application/xml" />
+				</wadl:response>
+			</wadl:method>
+		</wadl:resource>
+		<wadl:resource path="instances/{id}/reboot">
+			<wadl:param name="id" style="template" type="xs:int" />
+			<wadl:method name="POST" />
+		</wadl:resource>
+	</wadl:resources>
+</wadl:application>

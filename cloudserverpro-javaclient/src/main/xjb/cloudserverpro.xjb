@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2012 Fernando Ribeiro
+
+This file is part of Cloud Server Pro Tools.
+
+Cloud Server Pro Tools is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+Cloud Server Pro Tools is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with Cloud Server Pro Tools. If not, see <http://www.gnu.org/licenses/>.
+-->
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" schemaLocation="../xsd/cloudserverpro.xsd">
+	<jaxb:bindings node="./xs:complexType[@name='Image']//xs:element[@name='id']">
+		<jaxb:property name="imageId" />
+	</jaxb:bindings>
+	<jaxb:bindings node="./xs:complexType[@name='Instance']//xs:element[@name='id']">
+		<jaxb:property name="instanceId" />
+	</jaxb:bindings>
+	<jaxb:bindings node="./xs:element[@name='images']//xs:element">
+		<jaxb:property name="imageList" />
+	</jaxb:bindings>
+	<jaxb:bindings node="./xs:element[@name='instances']//xs:element">
+		<jaxb:property name="instanceList" />
+	</jaxb:bindings>
+	<jaxb:schemaBindings>
+		<jaxb:package name="br.eti.fernandoribeiro.schemas.cloudserverpro" />
+	</jaxb:schemaBindings>
+</jaxb:bindings>

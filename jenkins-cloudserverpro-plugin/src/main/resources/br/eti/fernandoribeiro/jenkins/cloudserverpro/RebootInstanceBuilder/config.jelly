@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
+	<f:entry title="API Login" field="apiLogin"
+		help="/plugin/cloudserverpro/help-apiLogin.html">
+		<f:textbox />
+	</f:entry>
+	<f:entry title="API Secret Key" field="apiSecretKey"
+		help="/plugin/cloudserverpro/help-apiSecretKey.html">
+		<f:textbox />
+	</f:entry>
+	<f:entry title="Instance ID" field="instanceId">
+		<f:textbox />
+	</f:entry>
+</j:jelly>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2013 Fernando Ribeiro
+
+This file is part of Cloud Server Pro Tools.
+
+Cloud Server Pro Tools is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+Cloud Server Pro Tools is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with Cloud Server Pro Tools. If not, see <http://www.gnu.org/licenses/>.
+-->
+<rhq:plugin description="Provides management of instances in Cloud Server Pro"
+	displayName="Cloud Server Pro" name="CloudServerPro"
+	package="br.eti.fernandoribeiro.rhq.cloudserverpro" version="1.0"
+	xmlns:rhq="urn:xmlns:rhq-plugin" xmlns:c="urn:xmlns:rhq-configuration">
+	<rhq:server class="CloudServerProInstanceComponent"
+		description="An instance in Cloud Server Pro" discovery="CloudServerProInstanceDiscoveryComponent"
+		name="Cloud Server Pro Instance" supportsManualAdd="true">
+		<rhq:plugin-configuration>
+			<c:simple-property description="A login for the Cloud Server Pro API"
+				displayName="API Login" name="apiLogin" required="true" />
+			<c:simple-property description="The secret key for the specified login"
+				displayName="API Secret Key" name="apiSecretKey" required="true" />
+			<c:simple-property description="The ID of the instance to manage"
+				displayName="Instance ID" name="instanceId" required="true">
+				<c:constraint>
+					<c:integer-constraint minimum="0" maximum="32767" />
+				</c:constraint>
+			</c:simple-property>
+		</rhq:plugin-configuration>
+		<rhq:operation name="reboot" description="Reboots the instance" />
+	</rhq:server>
+</rhq:plugin>
