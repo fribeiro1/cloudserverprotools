@@ -26,7 +26,7 @@ import com.sun.jersey.api.client.Client;
  * Reboots the specified instance
  */
 @Mojo(name = "reboot-instance")
-public final class RebootInstanceMojo extends AbstractMojo {
+public class RebootInstanceMojo extends AbstractMojo {
 	/**
 	 * A login for the Cloud Server Pro API
 	 */
@@ -48,12 +48,12 @@ public final class RebootInstanceMojo extends AbstractMojo {
 	public void execute() {
 		getLog().info("Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(getLog(), apiLogin, 0,
 				new Date(), apiSecretKey));
 
-		final InstancesIdReboot resource = CloudLocawebComBr_Api
+		InstancesIdReboot resource = CloudLocawebComBr_Api
 				.instancesIdReboot(client, instanceId);
 
 		resource.postAsvoid();

@@ -30,29 +30,29 @@ import com.sun.jersey.api.client.Client;
 
 @Component
 @Service
-public final class ImageCommands implements CommandMarker {
-	private static final Logger LOGGER = Logger.getLogger(ImageCommands.class
+public class ImageCommands implements CommandMarker {
+	private static Logger LOGGER = Logger.getLogger(ImageCommands.class
 			.getName());
 
 	@CliCommand(value = "cloudserverpro list-images", help = "List the images")
 	public void listImages(
-			@CliOption(key = { "apiLogin" }, mandatory = true, help = "A login for the Cloud Server Pro API") final String apiLogin,
-			@CliOption(key = { "apiSecretKey" }, mandatory = true, help = "The secret key for the specified login") final String apiSecretKey) {
+			@CliOption(key = { "apiLogin" }, mandatory = true, help = "A login for the Cloud Server Pro API") String apiLogin,
+			@CliOption(key = { "apiSecretKey" }, mandatory = true, help = "The secret key for the specified login") String apiSecretKey) {
 		LOGGER.info("Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(apiLogin, 0, new Date(),
 				apiSecretKey));
 
-		final Images resource = CloudLocawebComBr_Api.images(client);
+		Images resource = CloudLocawebComBr_Api.images(client);
 
-		final br.eti.fernandoribeiro.schemas.cloudserverpro.Images images = resource
+		br.eti.fernandoribeiro.schemas.cloudserverpro.Images images = resource
 				.getAsApplicationXml(br.eti.fernandoribeiro.schemas.cloudserverpro.Images.class);
 
 		out.println("ID,Name,Description");
 
-		for (final Image image : images.getImageList())
+		for (Image image : images.getImageList())
 			out.println(image.getId() + "," + image.getName() + ","
 					+ image.getDescription());
 

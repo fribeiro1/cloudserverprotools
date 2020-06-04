@@ -28,7 +28,7 @@ import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.filter.ClientFilter;
 
-final class SignatureClientFilter extends ClientFilter {
+class SignatureClientFilter extends ClientFilter {
 	private int contentLength;
 
 	private Date date;
@@ -39,8 +39,8 @@ final class SignatureClientFilter extends ClientFilter {
 
 	private String secretKey;
 
-	public SignatureClientFilter(final PrintStream logger, final String login,
-			final int contentLength, final Date date, final String secretKey) {
+	public SignatureClientFilter(PrintStream logger, String login,
+			int contentLength, Date date, String secretKey) {
 		this.logger = logger;
 
 		this.login = login;
@@ -53,23 +53,23 @@ final class SignatureClientFilter extends ClientFilter {
 	}
 
 	@Override
-	public ClientResponse handle(final ClientRequest request) {
+	public ClientResponse handle(ClientRequest request) {
 		ClientResponse result = null;
 
 		try {
 			logger.println("Adding signature to request");
 
-			final Map<String, List<Object>> headers = request.getHeaders();
+			Map<String, List<Object>> headers = request.getHeaders();
 
-			final List<Object> value = new ArrayList<Object>();
+			List<Object> value = new ArrayList<Object>();
 
-			final DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+			DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 
-			final String timestamp = formatter.format(date);
+			String timestamp = formatter.format(date);
 
-			final Hex encoder = new Hex();
+			Hex encoder = new Hex();
 
-			final MessageDigest digester = MessageDigest.getInstance("SHA1");
+			MessageDigest digester = MessageDigest.getInstance("SHA1");
 
 			value.add(login
 					+ ":"
@@ -82,7 +82,7 @@ final class SignatureClientFilter extends ClientFilter {
 			headers.put(HeaderNames.SIGNATURE, value);
 
 			result = getNext().handle(request);
-		} catch (final NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException e) {
 			logger.println("Can't handle request");
 		}
 

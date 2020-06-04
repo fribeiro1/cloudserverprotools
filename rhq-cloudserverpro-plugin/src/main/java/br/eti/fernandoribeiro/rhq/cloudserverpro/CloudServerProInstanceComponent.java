@@ -19,7 +19,7 @@ import org.rhq.core.pluginapi.operation.OperationFacet;
 import org.rhq.core.pluginapi.operation.OperationResult;
 import org.rhq.plugins.platform.PlatformComponent;
 
-public final class CloudServerProInstanceComponent implements
+public class CloudServerProInstanceComponent implements
 		ResourceComponent<PlatformComponent>, OperationFacet {
 
 	@Override
@@ -28,8 +28,8 @@ public final class CloudServerProInstanceComponent implements
 	}
 
 	@Override
-	public OperationResult invokeOperation(final String name,
-			final Configuration parameters) {
+	public OperationResult invokeOperation(String name,
+			Configuration parameters) {
 
 		if (!("reboot".equals(name)))
 			throw new UnsupportedOperationException("The operation " + name
@@ -39,7 +39,7 @@ public final class CloudServerProInstanceComponent implements
 	}
 
 	@Override
-	public void start(final ResourceContext<PlatformComponent> context) {
+	public void start(ResourceContext<PlatformComponent> context) {
 	}
 
 	@Override

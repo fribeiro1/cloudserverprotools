@@ -11,8 +11,8 @@
  */
 package br.eti.fernandoribeiro.rhq.cloudserverpro;
 
-final class HeaderNames {
-	public static final String API_SIGNATURE = "Api-Signature";
+class HeaderNames {
+	public static String API_SIGNATURE = "Api-Signature";
 
 	private HeaderNames() {
 	}

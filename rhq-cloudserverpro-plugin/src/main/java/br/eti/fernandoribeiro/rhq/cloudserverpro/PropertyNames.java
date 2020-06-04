@@ -11,12 +11,12 @@
  */
 package br.eti.fernandoribeiro.rhq.cloudserverpro;
 
-final class PropertyNames {
-	public static final String API_LOGIN = "apiLogin";
+class PropertyNames {
+	public static String API_LOGIN = "apiLogin";
 
-	public static final String API_SECRET_KEY = "apiSecretKey";
+	public static String API_SECRET_KEY = "apiSecretKey";
 
-	public static final String INSTANCE_ID = "instanceId";
+	public static String INSTANCE_ID = "instanceId";
 
 	private PropertyNames() {
 	}

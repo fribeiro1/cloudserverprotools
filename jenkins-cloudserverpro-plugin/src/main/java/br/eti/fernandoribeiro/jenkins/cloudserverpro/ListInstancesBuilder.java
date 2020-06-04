@@ -30,10 +30,10 @@ import br.eti.fernandoribeiro.schemas.cloudserverpro.Instance;
 
 import com.sun.jersey.api.client.Client;
 
-public final class ListInstancesBuilder extends Builder {
+public class ListInstancesBuilder extends Builder {
 
 	@Extension
-	public static final class ListInstancesBuilderDescriptor extends
+	public static class ListInstancesBuilderDescriptor extends
 			BuildStepDescriptor<Builder> {
 
 		@Override
@@ -43,7 +43,7 @@ public final class ListInstancesBuilder extends Builder {
 
 		@Override
 		public boolean isApplicable(
-				@SuppressWarnings("rawtypes") final Class<? extends AbstractProject> jobType) {
+				@SuppressWarnings("rawtypes") Class<? extends AbstractProject> jobType) {
 			return true;
 		}
 
@@ -54,32 +54,32 @@ public final class ListInstancesBuilder extends Builder {
 	private String apiSecretKey;
 
 	@DataBoundConstructor
-	public ListInstancesBuilder(final String apiLogin, final String apiSecretKey) {
+	public ListInstancesBuilder(String apiLogin, String apiSecretKey) {
 		this.apiLogin = apiLogin;
 
 		this.apiSecretKey = apiSecretKey;
 	}
 
 	@Override
-	public boolean perform(final AbstractBuild<?, ?> build,
-			final Launcher launcher, final BuildListener listener) {
-		final PrintStream logger = listener.getLogger();
+	public boolean perform(AbstractBuild<?, ?> build,
+			Launcher launcher, BuildListener listener) {
+		PrintStream logger = listener.getLogger();
 
 		logger.println("Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(logger, apiLogin, 0,
 				new Date(), apiSecretKey));
 
-		final Instances resource = CloudLocawebComBr_Api.instances(client);
+		Instances resource = CloudLocawebComBr_Api.instances(client);
 
-		final br.eti.fernandoribeiro.schemas.cloudserverpro.Instances instances = resource
+		br.eti.fernandoribeiro.schemas.cloudserverpro.Instances instances = resource
 				.getAsApplicationXml(br.eti.fernandoribeiro.schemas.cloudserverpro.Instances.class);
 
 		logger.println("ID,Name,State");
 
-		for (final Instance instance : instances.getInstanceList())
+		for (Instance instance : instances.getInstanceList())
 			logger.println(instance.getId() + "," + instance.getName() + ","
 					+ instance.getState());
 

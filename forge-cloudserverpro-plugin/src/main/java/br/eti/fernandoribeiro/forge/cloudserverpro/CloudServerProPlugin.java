@@ -35,29 +35,29 @@ import com.sun.jersey.api.client.Client;
 
 @Alias("cloudserverpro")
 @Help("Manages instances in Cloud Server Pro")
-public final class CloudServerProPlugin implements Plugin {
+public class CloudServerProPlugin implements Plugin {
 	@Inject
 	private Shell shell;
 
 	@Command(value = "list-images", help = "Lists the images")
 	public void listImages(
-			@Option(name = "apiLogin", required = true, help = "A login for the Cloud Server Pro API") final String apiLogin,
-			@Option(name = "apiSecretKey", required = true, help = "The secret key for the specified login") final String apiSecretKey) {
+			@Option(name = "apiLogin", required = true, help = "A login for the Cloud Server Pro API") String apiLogin,
+			@Option(name = "apiSecretKey", required = true, help = "The secret key for the specified login") String apiSecretKey) {
 		ShellMessages.info(shell, "Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(shell, apiLogin, 0,
 				new Date(), apiSecretKey));
 
-		final Images resource = CloudLocawebComBr_Api.images(client);
+		Images resource = CloudLocawebComBr_Api.images(client);
 
-		final br.eti.fernandoribeiro.schemas.cloudserverpro.Images images = resource
+		br.eti.fernandoribeiro.schemas.cloudserverpro.Images images = resource
 				.getAsApplicationXml(br.eti.fernandoribeiro.schemas.cloudserverpro.Images.class);
 
 		shell.println("ID,Name,Description");
 
-		for (final Image image : images.getImageList())
+		for (Image image : images.getImageList())
 			shell.println(image.getId() + "," + image.getName() + ","
 					+ image.getDescription());
 
@@ -65,23 +65,23 @@ public final class CloudServerProPlugin implements Plugin {
 
 	@Command(value = "list-instances", help = "Lists the instances")
 	public void listInstances(
-			@Option(name = "apiLogin", required = true, help = "A login for the Cloud Server Pro API") final String apiLogin,
-			@Option(name = "apiSecretKey", required = true, help = "The secret key for the specified login") final String apiSecretKey) {
+			@Option(name = "apiLogin", required = true, help = "A login for the Cloud Server Pro API") String apiLogin,
+			@Option(name = "apiSecretKey", required = true, help = "The secret key for the specified login") String apiSecretKey) {
 		ShellMessages.info(shell, "Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(shell, apiLogin, 0,
 				new Date(), apiSecretKey));
 
-		final Instances resource = CloudLocawebComBr_Api.instances(client);
+		Instances resource = CloudLocawebComBr_Api.instances(client);
 
-		final br.eti.fernandoribeiro.schemas.cloudserverpro.Instances instances = resource
+		br.eti.fernandoribeiro.schemas.cloudserverpro.Instances instances = resource
 				.getAsApplicationXml(br.eti.fernandoribeiro.schemas.cloudserverpro.Instances.class);
 
 		shell.println("ID,Name,State");
 
-		for (final Instance instance : instances.getInstanceList())
+		for (Instance instance : instances.getInstanceList())
 			shell.println(instance.getId() + "," + instance.getName() + ","
 					+ instance.getState());
 
@@ -89,17 +89,17 @@ public final class CloudServerProPlugin implements Plugin {
 
 	@Command(value = "reboot-instance", help = "Reboots the specified instance")
 	public void rebootInstance(
-			@Option(name = "apiLogin", required = true, help = "A login for the Cloud Server Pro API") final String apiLogin,
-			@Option(name = "apiSecretKey", required = true, help = "The secret key for the specified login") final String apiSecretKey,
-			@Option(name = "instanceId", required = true, help = "The ID of the instance to reboot") final int instanceId) {
+			@Option(name = "apiLogin", required = true, help = "A login for the Cloud Server Pro API") String apiLogin,
+			@Option(name = "apiSecretKey", required = true, help = "The secret key for the specified login") String apiSecretKey,
+			@Option(name = "instanceId", required = true, help = "The ID of the instance to reboot") int instanceId) {
 		ShellMessages.info(shell, "Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(shell, apiLogin, 0,
 				new Date(), apiSecretKey));
 
-		final InstancesIdReboot resource = CloudLocawebComBr_Api
+		InstancesIdReboot resource = CloudLocawebComBr_Api
 				.instancesIdReboot(client, instanceId);
 
 		resource.postAsvoid();
@@ -107,20 +107,20 @@ public final class CloudServerProPlugin implements Plugin {
 
 	@Command(value = "show-instance-detail", help = "Shows the detail of the specified instance")
 	public void showServerDetail(
-			@Option(name = "apiLogin", required = true, help = "A login for the Cloud Server Pro API") final String apiLogin,
-			@Option(name = "apiSecretKey", required = true, help = "The secret key for the specified login") final String apiSecretKey,
-			@Option(name = "instanceId", required = true, help = "The ID of the instance to show the detail of") final int instanceId) {
+			@Option(name = "apiLogin", required = true, help = "A login for the Cloud Server Pro API") String apiLogin,
+			@Option(name = "apiSecretKey", required = true, help = "The secret key for the specified login") String apiSecretKey,
+			@Option(name = "instanceId", required = true, help = "The ID of the instance to show the detail of") int instanceId) {
 		ShellMessages.info(shell, "Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(shell, apiLogin, 0,
 				new Date(), apiSecretKey));
 
-		final InstancesId resource = CloudLocawebComBr_Api.instancesId(client,
+		InstancesId resource = CloudLocawebComBr_Api.instancesId(client,
 				instanceId);
 
-		final Instance instance = resource.getAsApplicationXml(Instance.class);
+		Instance instance = resource.getAsApplicationXml(Instance.class);
 
 		shell.println("ID,Name,State");
 

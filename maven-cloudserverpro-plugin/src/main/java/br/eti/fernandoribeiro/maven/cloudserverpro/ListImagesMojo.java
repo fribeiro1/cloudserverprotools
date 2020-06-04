@@ -29,7 +29,7 @@ import com.sun.jersey.api.client.Client;
  * Lists the images
  */
 @Mojo(name = "list-images")
-public final class ListImagesMojo extends AbstractMojo {
+public class ListImagesMojo extends AbstractMojo {
 	/**
 	 * A login for the Cloud Server Pro API
 	 */
@@ -45,19 +45,19 @@ public final class ListImagesMojo extends AbstractMojo {
 	public void execute() {
 		getLog().info("Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(getLog(), apiLogin, 0,
 				new Date(), apiSecretKey));
 
-		final Images resource = CloudLocawebComBr_Api.images(client);
+		Images resource = CloudLocawebComBr_Api.images(client);
 
-		final br.eti.fernandoribeiro.schemas.cloudserverpro.Images images = resource
+		br.eti.fernandoribeiro.schemas.cloudserverpro.Images images = resource
 				.getAsApplicationXml(br.eti.fernandoribeiro.schemas.cloudserverpro.Images.class);
 
 		out.println("ID,Name,Description");
 
-		for (final Image image : images.getImageList())
+		for (Image image : images.getImageList())
 			out.println(image.getId() + "," + image.getName() + ","
 					+ image.getDescription());
 

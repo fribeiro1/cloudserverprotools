@@ -29,7 +29,7 @@ import com.sun.jersey.api.client.Client;
  * Shows the detail of the specified instance
  */
 @Mojo(name = "show-instance-detail")
-public final class ShowInstanceDetailMojo extends AbstractMojo {
+public class ShowInstanceDetailMojo extends AbstractMojo {
 	/**
 	 * A login for the Cloud Server Pro API
 	 */
@@ -51,15 +51,15 @@ public final class ShowInstanceDetailMojo extends AbstractMojo {
 	public void execute() {
 		getLog().info("Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(getLog(), apiLogin, 0,
 				new Date(), apiSecretKey));
 
-		final InstancesId resource = CloudLocawebComBr_Api.instancesId(client,
+		InstancesId resource = CloudLocawebComBr_Api.instancesId(client,
 				instanceId);
 
-		final Instance instance = resource.getAsApplicationXml(Instance.class);
+		Instance instance = resource.getAsApplicationXml(Instance.class);
 
 		out.println("ID,Name,State");
 

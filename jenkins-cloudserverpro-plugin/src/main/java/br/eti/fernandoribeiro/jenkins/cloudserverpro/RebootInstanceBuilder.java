@@ -29,10 +29,10 @@ import br.eti.fernandoribeiro.cloudserverpro.api.client.CloudLocawebComBr_Api.In
 
 import com.sun.jersey.api.client.Client;
 
-public final class RebootInstanceBuilder extends Builder {
+public class RebootInstanceBuilder extends Builder {
 
 	@Extension
-	public static final class RebootInstanceBuilderDescriptor extends
+	public static class RebootInstanceBuilderDescriptor extends
 			BuildStepDescriptor<Builder> {
 
 		@Override
@@ -42,7 +42,7 @@ public final class RebootInstanceBuilder extends Builder {
 
 		@Override
 		public boolean isApplicable(
-				@SuppressWarnings("rawtypes") final Class<? extends AbstractProject> jobType) {
+				@SuppressWarnings("rawtypes") Class<? extends AbstractProject> jobType) {
 			return true;
 		}
 
@@ -55,8 +55,8 @@ public final class RebootInstanceBuilder extends Builder {
 	private int instanceId;
 
 	@DataBoundConstructor
-	public RebootInstanceBuilder(final String apiLogin,
-			final String apiSecretKey, final int instanceId) {
+	public RebootInstanceBuilder(String apiLogin,
+			String apiSecretKey, int instanceId) {
 		this.apiLogin = apiLogin;
 
 		this.apiSecretKey = apiSecretKey;
@@ -65,18 +65,18 @@ public final class RebootInstanceBuilder extends Builder {
 	}
 
 	@Override
-	public boolean perform(final AbstractBuild<?, ?> build,
-			final Launcher launcher, final BuildListener listener) {
-		final PrintStream logger = listener.getLogger();
+	public boolean perform(AbstractBuild<?, ?> build,
+			Launcher launcher, BuildListener listener) {
+		PrintStream logger = listener.getLogger();
 
 		logger.println("Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(logger, apiLogin, 0,
 				new Date(), apiSecretKey));
 
-		final InstancesIdReboot resource = CloudLocawebComBr_Api
+		InstancesIdReboot resource = CloudLocawebComBr_Api
 				.instancesIdReboot(client, instanceId);
 
 		resource.postAsvoid();

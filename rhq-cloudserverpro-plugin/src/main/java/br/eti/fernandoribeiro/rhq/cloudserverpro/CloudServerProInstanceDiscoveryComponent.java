@@ -28,26 +28,26 @@ import br.eti.fernandoribeiro.schemas.cloudserverpro.Instance;
 
 import com.sun.jersey.api.client.Client;
 
-public final class CloudServerProInstanceDiscoveryComponent implements
+public class CloudServerProInstanceDiscoveryComponent implements
 		ResourceDiscoveryComponent<PlatformComponent>,
 		ManualAddFacet<PlatformComponent> {
 
 	@Override
 	public DiscoveredResourceDetails discoverResource(
-			final Configuration pluginConfiguration,
-			final ResourceDiscoveryContext<PlatformComponent> context) {
-		final Client client = Client.create();
+			Configuration pluginConfiguration,
+			ResourceDiscoveryContext<PlatformComponent> context) {
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(pluginConfiguration
 				.getSimpleValue(PropertyNames.API_LOGIN), 0, new Date(),
 				pluginConfiguration
 						.getSimpleValue(PropertyNames.API_SECRET_KEY)));
 
-		final InstancesId resource = CloudLocawebComBr_Api.instancesId(client,
+		InstancesId resource = CloudLocawebComBr_Api.instancesId(client,
 				pluginConfiguration.getSimple(PropertyNames.INSTANCE_ID)
 						.getIntegerValue());
 
-		final Instance instance = resource.getAsApplicationXml(Instance.class);
+		Instance instance = resource.getAsApplicationXml(Instance.class);
 
 		return new DiscoveredResourceDetails(context.getResourceType(),
 				instance.getName(), instance.getName(), null, null,
@@ -56,7 +56,7 @@ public final class CloudServerProInstanceDiscoveryComponent implements
 
 	@Override
 	public Set<DiscoveredResourceDetails> discoverResources(
-			final ResourceDiscoveryContext<PlatformComponent> context) {
+			ResourceDiscoveryContext<PlatformComponent> context) {
 		return new HashSet<DiscoveredResourceDetails>();
 	}
 

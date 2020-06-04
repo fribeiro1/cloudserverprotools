@@ -30,29 +30,29 @@ import br.eti.fernandoribeiro.schemas.cloudserverpro.Instance;
 import com.sun.jersey.api.client.Client;
 
 @Component
-public final class InstanceCommands implements CommandMarker {
-	private static final Logger LOGGER = Logger
+public class InstanceCommands implements CommandMarker {
+	private static Logger LOGGER = Logger
 			.getLogger(InstanceCommands.class.getName());
 
 	@CliCommand(value = "cloudserverpro list-instances", help = "Lists the instances")
 	public void listInstances(
-			@CliOption(key = { "apiLogin" }, mandatory = true, help = "A login for the Cloud Server Pro API") final String apiLogin,
-			@CliOption(key = { "apiSecretKey" }, mandatory = true, help = "The secret key for the specified login") final String apiSecretKey) {
+			@CliOption(key = { "apiLogin" }, mandatory = true, help = "A login for the Cloud Server Pro API") String apiLogin,
+			@CliOption(key = { "apiSecretKey" }, mandatory = true, help = "The secret key for the specified login") String apiSecretKey) {
 		LOGGER.info("Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(apiLogin, 0, new Date(),
 				apiSecretKey));
 
-		final Instances resource = CloudLocawebComBr_Api.instances(client);
+		Instances resource = CloudLocawebComBr_Api.instances(client);
 
-		final br.eti.fernandoribeiro.schemas.cloudserverpro.Instances instances = resource
+		br.eti.fernandoribeiro.schemas.cloudserverpro.Instances instances = resource
 				.getAsApplicationXml(br.eti.fernandoribeiro.schemas.cloudserverpro.Instances.class);
 
 		out.println("ID,Name,State");
 
-		for (final Instance instance : instances.getInstanceList())
+		for (Instance instance : instances.getInstanceList())
 			out.println(instance.getId() + "," + instance.getName() + ","
 					+ instance.getState());
 
@@ -60,19 +60,19 @@ public final class InstanceCommands implements CommandMarker {
 
 	@CliCommand(value = "cloudserverpro reboot-instance", help = "Reboots the specified instance")
 	public void rebootInstance(
-			@CliOption(key = { "apiLogin" }, mandatory = true, help = "A login for the Cloud Server Pro API") final String apiLogin,
-			@CliOption(key = { "apiSecretKey" }, mandatory = true, help = "The secret key for the specified login") final String apiSecretKey,
-			@CliOption(key = { "instanceId" }, mandatory = true, help = "The ID of the instance to reboot") final int instanceId) {
+			@CliOption(key = { "apiLogin" }, mandatory = true, help = "A login for the Cloud Server Pro API") String apiLogin,
+			@CliOption(key = { "apiSecretKey" }, mandatory = true, help = "The secret key for the specified login") String apiSecretKey,
+			@CliOption(key = { "instanceId" }, mandatory = true, help = "The ID of the instance to reboot") int instanceId) {
 		LOGGER.info("Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(apiLogin, 0, new Date(),
 				apiSecretKey));
 
 		LOGGER.finer("Instance ID = " + instanceId);
 
-		final InstancesIdReboot resource = CloudLocawebComBr_Api
+		InstancesIdReboot resource = CloudLocawebComBr_Api
 				.instancesIdReboot(client, instanceId);
 
 		resource.postAsvoid();
@@ -80,20 +80,20 @@ public final class InstanceCommands implements CommandMarker {
 
 	@CliCommand(value = "cloudserverpro show-instance-detail", help = "Shows the detail of the specified instance")
 	public void showInstanceDetail(
-			@CliOption(key = { "apiLogin" }, mandatory = true, help = "A login for the Cloud Server Pro API") final String apiLogin,
-			@CliOption(key = { "apiSecretKey" }, mandatory = true, help = "The secret key for the specified login") final String apiSecretKey,
-			@CliOption(key = { "instanceId" }, mandatory = true, help = "The ID of the instance to show the detail of") final int instanceId) {
+			@CliOption(key = { "apiLogin" }, mandatory = true, help = "A login for the Cloud Server Pro API") String apiLogin,
+			@CliOption(key = { "apiSecretKey" }, mandatory = true, help = "The secret key for the specified login") String apiSecretKey,
+			@CliOption(key = { "instanceId" }, mandatory = true, help = "The ID of the instance to show the detail of") int instanceId) {
 		LOGGER.info("Calling the Cloud Server Pro API");
 
-		final Client client = Client.create();
+		Client client = Client.create();
 
 		client.addFilter(new SignatureClientFilter(apiLogin, 0, new Date(),
 				apiSecretKey));
 
-		final InstancesId resource = CloudLocawebComBr_Api.instancesId(client,
+		InstancesId resource = CloudLocawebComBr_Api.instancesId(client,
 				instanceId);
 
-		final Instance instance = resource.getAsApplicationXml(Instance.class);
+		Instance instance = resource.getAsApplicationXml(Instance.class);
 
 		out.println("ID,Name,State");
 
